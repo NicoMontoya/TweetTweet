@@ -1,6 +1,6 @@
 from decouple import config
 from flask import Flask, render_template, request 
-from .models import DB, Tweeter
+from .models import DB, Tweeter, Tweet
 
 def create_app():
     """Create and configure an instance of the flask application"""
@@ -14,6 +14,12 @@ def create_app():
     def root():
         tweeters = Tweeter.query.all()
         return render_template('layout.html', title='Home', tweeters=tweeters)
+
+    @app.route("/tweeter/<handle>")
+    def tweeter(handle=None):
+        handle = Tweeter.query.filter(Tweeter.handle == handle).one().handle
+        tweets = Tweeter.query.filter(Tweeter.handle == handle).one().tweets
+        return render_template('user.html', title=handle, tweets=tweets)
 
     @app.route("/reset")
     def reset():

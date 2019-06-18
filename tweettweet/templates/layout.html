@@ -10,7 +10,7 @@
         <p>Content for TweetTweet will go here...</p>
         <ul>
             {% for tweeter in tweeters %}
-            <li>{{ tweeter.handle }}</li>
+            <li><a href="/tweeter/{{ tweeter.handle }}">{{ tweeter.handle }}</a></li>
             {% endfor %}
         </ul>
     </body>
