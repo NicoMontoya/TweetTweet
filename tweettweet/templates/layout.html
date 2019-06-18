@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TweetTweet - {{ title }} </title>
+        <!-- CSS, Keywords, metadata goes here-->
+    </head>
+
+    <body>
+        <h1>TweetTweet!</h1>
+        <p>Content for TweetTweet will go here...</p>
+        <ul>
+            {% for tweeter in tweeters %}
+            <li>{{ tweeter.handle }}</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
