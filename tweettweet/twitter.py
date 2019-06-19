@@ -44,3 +44,6 @@ def add_or_update_tweeter(username):
     else:
         DB.session.commit()
 
+def update_all():
+    for tweeter in Tweeter.query.all():
+        add_or_update_tweeter(tweeter.handle)

@@ -1,7 +1,7 @@
 from decouple import config
 from flask import Flask, render_template, request 
 from .models import DB, Tweeter, Tweet
-from .twitter import add_or_update_tweeter
+from .twitter import add_or_update_tweeter, update_all
 from .predict import predict_tweeter
 
 def create_app():
@@ -16,6 +16,15 @@ def create_app():
     def root():
         tweeters = Tweeter.query.all()
         return render_template('layout.html', title='Home', tweeters=tweeters)
+
+    @app.route("/update")
+    def update():
+        if config("ENV") == "production":
+            CACHE.flushall()
+            CACHED_COMPARISONS.clear()
+        update_all()
+        return render_template("layout.html", tweeters=Tweeter.query.all(),
+                                title="Cache cleared and tweeters are updated")
 
     @app.route("/tweeter", methods=['POST'])
     @app.route("/tweeter/<handle>", methods=['GET'])
