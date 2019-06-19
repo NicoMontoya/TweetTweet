@@ -3,15 +3,57 @@
     <head>
         <title>TweetTweet - {{ title }} </title>
         <!-- CSS, Keywords, metadata goes here-->
+        <link rel="stylesheet" href="https://unpkg.com/picnic">
     </head>
 
     <body>
-        <h1>TweetTweet!</h1>
-        <p>Content for TweetTweet will go here...</p>
-        <ul>
-            {% for tweeter in tweeters %}
-            <li><a href="/tweeter/{{ tweeter.handle }}">{{ tweeter.handle }}</a></li>
-            {% endfor %}
-        </ul>
+        <nav>
+            <a href="/" class="brand"><span>TweetTweet</span></a>
+            <!-- responsive -->
+            <input id="bmenub" type="checkbox" class="show">
+            <label for="bmenub" class="burger pseudo button">Menu</label>
+            <div class="menu">
+                <a href="/update" class="button warning">Update Tweets</a>
+            </div>
+        </nav>
+
+        <article class="flex two" style="padding: 3em 1em;">
+            {% block content %}
+            <div>
+                <h1>{{ title }}</h1>
+                <form action="/compare" method="post">
+                    <select name="tweeter1">
+                        {% for tweeter in tweeters %}
+                        <option valuse="{{ tweeter.handle }}">{{ tweeter.handle }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="tweeter2">
+                        {% for tweeter in tweeters %}
+                        <option value="{{ tweeter.handle }}">{{ tweeter.handle }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="tweet_text" placeholder="Tweet text to predict">
+                    <input type="submit" value="Compare Users">
+                </form>
+
+                <h3>Recent comparisons:</h3>
+                {% for comparison in comparisons %}
+                <span class="stack">{{ comparison }}</span>
+                {% endfor %}
+            </div>
+            <div>
+                <h2>Tweeters</h2>
+                {% for tweeter in tweeters %}
+                <a href="/tweeter/{{ tweeter.handle }}"><span class="stack">{{ tweeter.handle }}</span></a>
+                {% endfor %}
+                <form action="/tweeter" method="post">
+                    <input type="text" name="tweeter_handle" placeholder="Tweeter to add">
+                    <input type="submit" value="Add Tweeter">
+                </form>
+            </div>
+            {% endblock %}
+        </article>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/umbrellajs"/> -->
+ 
     </body>
 </html>
