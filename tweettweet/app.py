@@ -34,11 +34,9 @@ def create_app():
     @app.route("/compare", methods=["POST"])
     def compare():
         tweeter1, tweeter2 = request.values['tweeter1'], request.values['tweeter2']
-        if tweeter1 == tweeter2:
-            return "Cannot compare a user to themselves"
-        else:
-            prediction = predict_tweeter(tweeter1, tweeter2, request.values['tweet_text'])
-            return tweeter1 if prediction else tweeter2
+        prediction = predict_tweeter(tweeter1, tweeter2, request.values['tweet_text'])
+        return render_template('compare.html', title=tweeter1 if prediction else tweeter2)
+        #return tweeter1 if prediction else tweeter2
 
 
     @app.route("/reset")
