@@ -24,7 +24,7 @@
                 <form action="/compare" method="post">
                     <select name="tweeter1">
                         {% for tweeter in tweeters %}
-                        <option valuse="{{ tweeter.handle }}">{{ tweeter.handle }}</option>
+                        <option value="{{ tweeter.handle }}">{{ tweeter.handle }}</option>
                         {% endfor %}
                     </select>
                     <select name="tweeter2">
